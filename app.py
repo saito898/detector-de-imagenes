@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 import torch
 
-# ============================================================
+# =========================================================
 # CONFIGURACIÓN
-# ============================================================
+# =========================================================
 
 st.set_page_config(
     page_title="Detección de Objetos en Tiempo Real",
@@ -15,370 +15,194 @@ st.set_page_config(
     layout="wide"
 )
 
-# ============================================================
+# =========================================================
 # ESTILOS
-# ============================================================
+# =========================================================
 
 st.markdown("""
 <style>
 
-/* ============================================================
-   FUENTE
-   ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-}
-
-/* ============================================================
-   FONDO
-   ============================================================ */
+/* -------------------- FONDO GENERAL -------------------- */
 
 .stApp {
     background: #f7f4fc;
 }
 
-.block-container {
-    max-width: 1200px;
-    padding-top: 2rem;
-    padding-bottom: 4rem;
-}
-
-/* ============================================================
-   OCULTAR ELEMENTOS
-   ============================================================ */
-
-#MainMenu {
-    visibility: hidden;
-}
-
-footer {
-    visibility: hidden;
-}
-
-header[data-testid="stHeader"] {
-    background: transparent;
-}
-
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
+/* -------------------- SIDEBAR -------------------- */
 
 section[data-testid="stSidebar"] {
-    background: linear-gradient(
-        180deg,
-        #32145f 0%,
-        #4d2380 55%,
-        #622c91 100%
-    );
-}
-
-section[data-testid="stSidebar"] > div {
-    padding-top: 2rem;
+    background: linear-gradient(180deg, #32145f 0%, #4d2380 100%);
 }
 
 section[data-testid="stSidebar"] * {
     color: white !important;
 }
 
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3 {
+section[data-testid="stSidebar"] .stSlider > div > div > div {
     color: white !important;
 }
 
-section[data-testid="stSidebar"] label {
-    color: #eee7fa !important;
-}
+/* -------------------- TITULOS -------------------- */
 
-/* ============================================================
-   HERO
-   ============================================================ */
-
-.hero-container {
-    background: linear-gradient(
-        135deg,
-        #32145f 0%,
-        #5b2590 50%,
-        #8246b8 100%
-    );
-
-    border-radius: 26px;
-
-    padding: 38px 44px;
-
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 18px 40px rgba(74, 37, 120, 0.20);
-}
-
-.hero-container h1 {
-    color: white !important;
+h1 {
+    color: #49226f !important;
     font-size: 42px !important;
     font-weight: 800 !important;
-    margin: 5px 0 10px 0 !important;
-}
-
-.hero-container p {
-    color: #eee7fa !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    margin: 0 !important;
-}
-
-.hero-label {
-    color: #dfcff3 !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase;
-}
-
-/* ============================================================
-   TÍTULOS
-   ============================================================ */
-
-h1, h2, h3 {
-    color: #49226f !important;
-    font-weight: 800 !important;
+    margin-bottom: 5px !important;
 }
 
 h2 {
-    margin-top: 25px !important;
+    color: #49226f !important;
+    font-weight: 750 !important;
 }
 
-/* ============================================================
-   TEXTO NORMAL
-   ============================================================ */
+h3 {
+    color: #5b2d82 !important;
+    font-weight: 700 !important;
+}
+
+/* -------------------- TEXTO -------------------- */
 
 p {
-    color: #514b5c;
+    color: #5f5570;
 }
 
-.stCaption {
-    color: #82788e !important;
+[data-testid="stCaptionContainer"] {
+    color: #756a82;
 }
 
-/* ============================================================
-   TARJETAS
-   ============================================================ */
+/* -------------------- LINEAS -------------------- */
 
-div[data-testid="stVerticalBlockBorderWrapper"] {
-    background: white;
-    border-radius: 20px;
-    border: 1px solid #e6dcef;
+hr {
+    border: none;
+    height: 1px;
+    background: #e3d9ed;
+    margin: 25px 0;
 }
 
-/* ============================================================
-   CÁMARA
-   ============================================================ */
+/* -------------------- BOTON CAMARA -------------------- */
 
-div[data-testid="stCameraInput"] {
-    background: white;
-    border: 1px solid #e6dcef;
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 7px 22px rgba(66, 42, 95, 0.07);
+button {
+    border-radius: 10px !important;
 }
 
-/* ============================================================
-   FILE / INPUTS
-   ============================================================ */
-
-input,
-textarea {
-    border-radius: 12px !important;
-}
-
-/* ============================================================
-   BOTONES
-   ============================================================ */
-
-.stButton > button {
-    border: none !important;
-    border-radius: 13px !important;
-
-    background: linear-gradient(
-        135deg,
-        #65359b,
-        #8246b8
-    ) !important;
-
-    color: white !important;
-
-    font-weight: 700 !important;
-
-    padding: 11px 20px !important;
-
-    box-shadow:
-        0 8px 18px rgba(91, 48, 130, 0.20);
-
-    transition: all 0.2s ease;
-}
-
-.stButton > button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 25px rgba(91, 48, 130, 0.28);
-}
-
-/* ============================================================
-   SLIDERS
-   ============================================================ */
-
-section[data-testid="stSidebar"] [data-testid="stSlider"] {
-    margin-bottom: 20px;
-}
-
-/* ============================================================
-   TABLA
-   ============================================================ */
+/* -------------------- DATAFRAME -------------------- */
 
 [data-testid="stDataFrame"] {
+    border: 1px solid #e4d9ed;
     border-radius: 14px;
     overflow: hidden;
 }
 
-/* ============================================================
-   EXPANDERS
-   ============================================================ */
+/* -------------------- METRICAS / INFORMACION -------------------- */
 
-div[data-testid="stExpander"] {
-    background: white !important;
-    border: 1px solid #e6dcef !important;
-    border-radius: 16px !important;
+[data-testid="stAlert"] {
+    border-radius: 14px;
 }
 
-/* ============================================================
-   ALERTAS
-   ============================================================ */
+/* -------------------- CONTENEDORES -------------------- */
 
-div[data-testid="stAlert"] {
-    border-radius: 14px !important;
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 18px;
+    border-color: #e3d9ed;
+    background: white;
 }
 
-/* ============================================================
-   GRÁFICAS
-   ============================================================ */
+/* -------------------- BOTON PRINCIPAL -------------------- */
+
+.stButton > button {
+    background: #5b2590;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.stButton > button:hover {
+    background: #7138a6;
+    color: white;
+}
+
+/* -------------------- ESPACIADO -------------------- */
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* -------------------- FILE UPLOADER / CAMERA -------------------- */
+
+[data-testid="stCameraInput"] {
+    background: white;
+    border-radius: 18px;
+    padding: 10px;
+}
+
+/* -------------------- GRAFICA -------------------- */
 
 [data-testid="stVegaLiteChart"] {
     background: white;
-    border-radius: 15px;
-    padding: 8px;
-}
-
-/* ============================================================
-   DIVISOR
-   ============================================================ */
-
-hr {
-    border: none !important;
-    border-top: 1px solid #e3d9ed !important;
-    margin: 35px 0 !important;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-
-.footer-text {
-    text-align: center;
-    color: #91869e;
-    font-size: 13px;
-    padding: 15px 0;
+    border-radius: 18px;
+    padding: 10px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 
-# ============================================================
-# ENCABEZADO
-# ============================================================
-
-st.markdown("""
-<div class="hero-container">
-
-    <div class="hero-label">
-        ✦ VISIÓN ARTIFICIAL
-    </div>
-
-    <h1>
-        🔍 Detección de Objetos
-    </h1>
-
-    <p>
-        Captura una imagen con tu cámara y descubre automáticamente
-        los objetos presentes utilizando un modelo YOLOv5.
-    </p>
-
-</div>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# DESCRIPCIÓN
-# ============================================================
-
-st.info(
-    "📌 Captura una imagen utilizando tu cámara. "
-    "El modelo de inteligencia artificial analizará la imagen "
-    "y señalará los objetos detectados junto con su categoría "
-    "y nivel de confianza."
-)
-
-
-# ============================================================
-# CARGAR MODELO
-# ============================================================
+# =========================================================
+# MODELO
+# =========================================================
 
 @st.cache_resource
 def load_model():
-
     try:
         from ultralytics import YOLO
-
         model = YOLO("yolov5su.pt")
-
         return model
-
     except Exception as e:
-
-        st.error(
-            f"❌ Error al cargar el modelo: {str(e)}"
-        )
-
+        st.error(f"❌ Error al cargar el modelo: {str(e)}")
         return None
 
+
+# =========================================================
+# ENCABEZADO
+# =========================================================
+
+st.title("🔍 Detección de Objetos en Tiempo Real")
+
+st.caption(
+    "Captura una imagen con tu cámara y utiliza inteligencia artificial "
+    "para identificar los objetos presentes."
+)
+
+st.write("")
+
+
+# =========================================================
+# CARGAR MODELO
+# =========================================================
 
 with st.spinner("Cargando modelo YOLOv5..."):
     model = load_model()
 
 
-# ============================================================
-# APLICACIÓN
-# ============================================================
+# =========================================================
+# SI EL MODELO CARGÓ CORRECTAMENTE
+# =========================================================
 
 if model:
 
-    # ========================================================
+    # -----------------------------------------------------
     # SIDEBAR
-    # ========================================================
+    # -----------------------------------------------------
 
     with st.sidebar:
 
         st.title("⚙️ Parámetros")
 
-        st.caption(
-            "Ajusta la configuración utilizada "
-            "por el detector de objetos."
-        )
-
         st.subheader("Configuración de detección")
+
+        st.write("Ajusta los valores según el nivel de precisión que necesites.")
 
         conf_threshold = st.slider(
             "Confianza mínima",
@@ -404,15 +228,23 @@ if model:
             10
         )
 
-    # ========================================================
-    # CÁMARA
-    # ========================================================
+        st.divider()
 
-    st.subheader("📷 Capturar imagen")
+        st.caption(
+            "Los valores más altos de confianza hacen que el modelo "
+            "sea más estricto al detectar objetos."
+        )
 
-    st.caption(
-        "Utiliza la cámara para tomar una fotografía "
-        "que será analizada por el modelo."
+
+    # -----------------------------------------------------
+    # CAMARA
+    # -----------------------------------------------------
+
+    st.subheader("📷 Captura una imagen")
+
+    st.write(
+        "Utiliza la cámara para tomar una fotografía que será analizada "
+        "automáticamente."
     )
 
     picture = st.camera_input(
@@ -420,28 +252,27 @@ if model:
         key="camera"
     )
 
-    # ========================================================
+
+    # -----------------------------------------------------
     # PROCESAMIENTO
-    # ========================================================
+    # -----------------------------------------------------
 
     if picture:
 
         bytes_data = picture.getvalue()
 
-        # Decodificar con Pillow
         pil_img = Image.open(
             io.BytesIO(bytes_data)
         ).convert("RGB")
 
-        np_img = np.array(
-            pil_img
-        )[..., ::-1]
+        np_img = np.array(pil_img)[..., ::-1]
 
-        # ====================================================
+
+        # -------------------------------------------------
         # DETECCIÓN
-        # ====================================================
+        # -------------------------------------------------
 
-        with st.spinner("Detectando objetos..."):
+        with st.spinner("🔎 Detectando objetos..."):
 
             try:
 
@@ -460,6 +291,7 @@ if model:
 
                 st.stop()
 
+
         result = results[0]
 
         boxes = result.boxes
@@ -468,49 +300,40 @@ if model:
 
         annotated_rgb = annotated[:, :, ::-1]
 
-        # ====================================================
+
+        # -------------------------------------------------
         # RESULTADOS
-        # ====================================================
+        # -------------------------------------------------
 
-        st.markdown("---")
-
-        st.subheader("📊 Resultados de la detección")
+        st.divider()
 
         col1, col2 = st.columns(
-            [1.15, 0.85],
+            [1.4, 1],
             gap="large"
         )
 
-        # ====================================================
+
+        # -------------------------------------------------
         # IMAGEN
-        # ====================================================
+        # -------------------------------------------------
 
         with col1:
 
-            st.markdown("### 🖼️ Imagen con detecciones")
-
-            st.caption(
-                "Los objetos encontrados están marcados "
-                "directamente sobre la imagen."
-            )
+            st.subheader("🖼️ Imagen con detecciones")
 
             st.image(
                 annotated_rgb,
                 use_container_width=True
             )
 
-        # ====================================================
-        # OBJETOS
-        # ====================================================
+
+        # -------------------------------------------------
+        # OBJETOS DETECTADOS
+        # -------------------------------------------------
 
         with col2:
 
-            st.markdown("### 🎯 Objetos detectados")
-
-            st.caption(
-                "Resumen de las categorías encontradas "
-                "en la imagen."
-            )
+            st.subheader("📊 Objetos detectados")
 
             if boxes is not None and len(boxes) > 0:
 
@@ -519,6 +342,7 @@ if model:
                 category_count = {}
 
                 category_conf = {}
+
 
                 for box in boxes:
 
@@ -539,15 +363,12 @@ if model:
                         []
                     ).append(conf)
 
+
                 data = [
 
                     {
-                        "Categoría":
-                            label_names[cat],
-
-                        "Cantidad":
-                            count,
-
+                        "Categoría": label_names[cat],
+                        "Cantidad": count,
                         "Confianza promedio":
                             f"{np.mean(category_conf[cat]):.2f}"
                     }
@@ -557,7 +378,9 @@ if model:
 
                 ]
 
+
                 df = pd.DataFrame(data)
+
 
                 st.dataframe(
                     df,
@@ -565,25 +388,31 @@ if model:
                     hide_index=True
                 )
 
-                st.markdown("### 📈 Cantidad por categoría")
+
+                st.write("")
+
+                st.subheader("Cantidad por categoría")
 
                 st.bar_chart(
-                    df.set_index(
-                        "Categoría"
-                    )["Cantidad"]
+                    df.set_index("Categoría")["Cantidad"]
                 )
+
 
             else:
 
                 st.info(
-                    "No se detectaron objetos con "
-                    "los parámetros actuales."
+                    "No se detectaron objetos con los parámetros actuales."
                 )
 
                 st.caption(
-                    "Prueba a reducir el umbral de "
-                    "confianza en la barra lateral."
+                    "Prueba a reducir el umbral de confianza "
+                    "en la barra lateral."
                 )
+
+
+# =========================================================
+# ERROR DEL MODELO
+# =========================================================
 
 else:
 
@@ -595,20 +424,12 @@ else:
     st.stop()
 
 
-# ============================================================
-# INFORMACIÓN FINAL
-# ============================================================
+# =========================================================
+# PIE DE PÁGINA
+# =========================================================
 
-st.markdown("---")
+st.divider()
 
 st.caption(
-    "🤖 Acerca de la aplicación: "
-    "Detección de objetos con YOLOv5 + Streamlit + PyTorch."
-)
-
-st.markdown(
-    '<div class="footer-text">'
-    'Hecho con 💜 usando YOLOv5, PyTorch y Streamlit'
-    '</div>',
-    unsafe_allow_html=True
+    "🔍 Detección de objetos con YOLOv5 + Streamlit + PyTorch."
 )
