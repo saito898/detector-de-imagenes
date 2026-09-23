@@ -6,7 +6,7 @@ import pandas as pd
 import torch
 
 # ============================================================
-# CONFIGURACIÓN DE LA PÁGINA
+# CONFIGURACIÓN
 # ============================================================
 
 st.set_page_config(
@@ -16,11 +16,15 @@ st.set_page_config(
 )
 
 # ============================================================
-# ESTILOS VISUALES
+# ESTILOS
 # ============================================================
 
 st.markdown("""
 <style>
+
+/* ============================================================
+   FUENTE
+   ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -29,14 +33,10 @@ html, body, [class*="css"] {
 }
 
 /* ============================================================
-   FONDO GENERAL
+   FONDO
    ============================================================ */
 
 .stApp {
-    background: #f7f4fc;
-}
-
-.main {
     background: #f7f4fc;
 }
 
@@ -47,7 +47,7 @@ html, body, [class*="css"] {
 }
 
 /* ============================================================
-   OCULTAR ELEMENTOS NATIVOS
+   OCULTAR ELEMENTOS
    ============================================================ */
 
 #MainMenu {
@@ -70,185 +70,106 @@ section[data-testid="stSidebar"] {
     background: linear-gradient(
         180deg,
         #32145f 0%,
-        #4d2380 50%,
+        #4d2380 55%,
         #622c91 100%
     );
 }
 
 section[data-testid="stSidebar"] > div {
-    padding: 2rem 1.25rem;
+    padding-top: 2rem;
 }
 
 section[data-testid="stSidebar"] * {
     color: white !important;
 }
 
-.sidebar-title {
-    font-size: 23px;
-    font-weight: 800;
-    margin-bottom: 5px;
-}
-
-.sidebar-subtitle {
-    color: #dfd2f3 !important;
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 25px;
-}
-
-/* ============================================================
-   SLIDERS
-   ============================================================ */
-
-section[data-testid="stSidebar"] [data-testid="stSlider"] {
-    margin-bottom: 22px;
-}
-
-section[data-testid="stSidebar"] [data-testid="stSlider"] label {
-    font-weight: 600 !important;
-}
-
-section[data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"] {
-    background-color: #c9a7f4 !important;
-}
-
-/* ============================================================
-   NUMBER INPUT
-   ============================================================ */
-
-section[data-testid="stSidebar"] input {
-    background: rgba(255,255,255,0.10) !important;
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
     color: white !important;
-    border: 1px solid rgba(255,255,255,0.25) !important;
-    border-radius: 10px !important;
+}
+
+section[data-testid="stSidebar"] label {
+    color: #eee7fa !important;
 }
 
 /* ============================================================
    HERO
    ============================================================ */
 
-.hero {
-    position: relative;
-    overflow: hidden;
-
+.hero-container {
     background: linear-gradient(
         135deg,
         #32145f 0%,
-        #5b2590 48%,
+        #5b2590 50%,
         #8246b8 100%
     );
 
     border-radius: 26px;
-    padding: 42px 45px;
+
+    padding: 38px 44px;
+
     margin-bottom: 25px;
 
     box-shadow:
         0 18px 40px rgba(74, 37, 120, 0.20);
 }
 
-.hero::before {
-    content: "";
-    position: absolute;
-
-    width: 280px;
-    height: 280px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,0.08);
-
-    right: -80px;
-    top: -120px;
+.hero-container h1 {
+    color: white !important;
+    font-size: 42px !important;
+    font-weight: 800 !important;
+    margin: 5px 0 10px 0 !important;
 }
 
-.hero::after {
-    content: "";
-
-    position: absolute;
-
-    width: 190px;
-    height: 190px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,0.06);
-
-    right: 130px;
-    bottom: -120px;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
+.hero-container p {
+    color: #eee7fa !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
 }
 
 .hero-label {
-    color: #e8dcfa;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
+    color: #dfcff3 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
     text-transform: uppercase;
-
-    margin-bottom: 10px;
-}
-
-.hero-title {
-    color: white;
-
-    font-size: 42px;
-    font-weight: 800;
-
-    line-height: 1.1;
-
-    margin: 0;
-}
-
-.hero-description {
-    color: #eee7fa;
-
-    font-size: 16px;
-    line-height: 1.6;
-
-    max-width: 720px;
-
-    margin-top: 14px;
-}
-
-/* ============================================================
-   INTRO
-   ============================================================ */
-
-.intro {
-    background: white;
-
-    border: 1px solid #e8def4;
-
-    border-radius: 18px;
-
-    padding: 18px 22px;
-
-    margin-bottom: 28px;
-
-    color: #6b6379;
-
-    font-size: 14px;
-    line-height: 1.6;
-
-    box-shadow:
-        0 5px 18px rgba(66, 42, 95, 0.05);
 }
 
 /* ============================================================
    TÍTULOS
    ============================================================ */
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     color: #49226f !important;
     font-weight: 800 !important;
+}
+
+h2 {
+    margin-top: 25px !important;
+}
+
+/* ============================================================
+   TEXTO NORMAL
+   ============================================================ */
+
+p {
+    color: #514b5c;
+}
+
+.stCaption {
+    color: #82788e !important;
+}
+
+/* ============================================================
+   TARJETAS
+   ============================================================ */
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e6dcef;
 }
 
 /* ============================================================
@@ -257,23 +178,79 @@ h3 {
 
 div[data-testid="stCameraInput"] {
     background: white;
-
     border: 1px solid #e6dcef;
-
     border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 7px 22px rgba(66, 42, 95, 0.07);
+}
 
-    padding: 12px;
+/* ============================================================
+   FILE / INPUTS
+   ============================================================ */
 
-    box-shadow:
-        0 7px 22px rgba(66, 42, 95, 0.07);
+input,
+textarea {
+    border-radius: 12px !important;
 }
 
 /* ============================================================
    BOTONES
    ============================================================ */
 
-button {
-    border-radius: 12px !important;
+.stButton > button {
+    border: none !important;
+    border-radius: 13px !important;
+
+    background: linear-gradient(
+        135deg,
+        #65359b,
+        #8246b8
+    ) !important;
+
+    color: white !important;
+
+    font-weight: 700 !important;
+
+    padding: 11px 20px !important;
+
+    box-shadow:
+        0 8px 18px rgba(91, 48, 130, 0.20);
+
+    transition: all 0.2s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(91, 48, 130, 0.28);
+}
+
+/* ============================================================
+   SLIDERS
+   ============================================================ */
+
+section[data-testid="stSidebar"] [data-testid="stSlider"] {
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+
+[data-testid="stDataFrame"] {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+/* ============================================================
+   EXPANDERS
+   ============================================================ */
+
+div[data-testid="stExpander"] {
+    background: white !important;
+    border: 1px solid #e6dcef !important;
+    border-radius: 16px !important;
 }
 
 /* ============================================================
@@ -285,97 +262,13 @@ div[data-testid="stAlert"] {
 }
 
 /* ============================================================
-   TARJETAS
-   ============================================================ */
-
-.card {
-    background: white;
-
-    border: 1px solid #e6dcef;
-
-    border-radius: 20px;
-
-    padding: 24px;
-
-    box-shadow:
-        0 7px 22px rgba(66, 42, 95, 0.06);
-
-    height: 100%;
-}
-
-.card-title {
-    color: #49226f;
-
-    font-size: 19px;
-    font-weight: 800;
-
-    margin-bottom: 6px;
-}
-
-.card-description {
-    color: #81778f;
-
-    font-size: 13px;
-
-    margin-bottom: 18px;
-}
-
-/* ============================================================
-   TARJETA DE ESTADO
-   ============================================================ */
-
-.status-card {
-    background: linear-gradient(
-        135deg,
-        #f2eafa,
-        #faf8fd
-    );
-
-    border: 1px solid #e4d7f0;
-
-    border-radius: 17px;
-
-    padding: 17px 20px;
-
-    margin-bottom: 20px;
-}
-
-.status-title {
-    color: #512879;
-
-    font-weight: 800;
-
-    font-size: 14px;
-
-    margin-bottom: 5px;
-}
-
-.status-text {
-    color: #766c82;
-
-    font-size: 13px;
-}
-
-/* ============================================================
-   TABLA
-   ============================================================ */
-
-[data-testid="stDataFrame"] {
-    border: 1px solid #e4d9ef;
-
-    border-radius: 14px;
-
-    overflow: hidden;
-}
-
-/* ============================================================
-   GRÁFICA
+   GRÁFICAS
    ============================================================ */
 
 [data-testid="stVegaLiteChart"] {
     background: white;
-
     border-radius: 15px;
+    padding: 8px;
 }
 
 /* ============================================================
@@ -384,9 +277,7 @@ div[data-testid="stAlert"] {
 
 hr {
     border: none !important;
-
-    border-top: 1px solid #e4dced !important;
-
+    border-top: 1px solid #e3d9ed !important;
     margin: 35px 0 !important;
 }
 
@@ -394,38 +285,11 @@ hr {
    FOOTER
    ============================================================ */
 
-.footer-custom {
+.footer-text {
     text-align: center;
-
     color: #91869e;
-
     font-size: 13px;
-
-    padding: 20px 0 5px;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 768px) {
-
-    .hero {
-        padding: 30px 25px;
-    }
-
-    .hero-title {
-        font-size: 31px;
-    }
-
-    .hero-description {
-        font-size: 14px;
-    }
-
-    .block-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+    padding: 15px 0;
 }
 
 </style>
@@ -437,44 +301,35 @@ hr {
 # ============================================================
 
 st.markdown("""
-<div class="hero">
+<div class="hero-container">
 
-    <div class="hero-content">
-
-        <div class="hero-label">
-            ✦ VISIÓN ARTIFICIAL
-        </div>
-
-        <div class="hero-title">
-            🔍 Detección de Objetos
-        </div>
-
-        <div class="hero-description">
-            Captura una imagen con tu cámara y descubre automáticamente
-            los objetos presentes utilizando un modelo YOLOv5.
-        </div>
-
+    <div class="hero-label">
+        ✦ VISIÓN ARTIFICIAL
     </div>
 
+    <h1>
+        🔍 Detección de Objetos
+    </h1>
+
+    <p>
+        Captura una imagen con tu cámara y descubre automáticamente
+        los objetos presentes utilizando un modelo YOLOv5.
+    </p>
+
 </div>
 """, unsafe_allow_html=True)
 
 
 # ============================================================
-# INTRODUCCIÓN
+# DESCRIPCIÓN
 # ============================================================
 
-st.markdown("""
-<div class="intro">
-
-    <b>¿Cómo funciona?</b><br>
-
-    Captura una imagen utilizando tu cámara. El modelo de inteligencia
-    artificial analizará la imagen y señalará los objetos detectados,
-    junto con su categoría y nivel de confianza.
-
-</div>
-""", unsafe_allow_html=True)
+st.info(
+    "📌 Captura una imagen utilizando tu cámara. "
+    "El modelo de inteligencia artificial analizará la imagen "
+    "y señalará los objetos detectados junto con su categoría "
+    "y nivel de confianza."
+)
 
 
 # ============================================================
@@ -485,7 +340,6 @@ st.markdown("""
 def load_model():
 
     try:
-
         from ultralytics import YOLO
 
         model = YOLO("yolov5su.pt")
@@ -502,28 +356,27 @@ def load_model():
 
 
 with st.spinner("Cargando modelo YOLOv5..."):
-
     model = load_model()
 
 
 # ============================================================
-# CONFIGURACIÓN
+# APLICACIÓN
 # ============================================================
 
 if model:
 
+    # ========================================================
+    # SIDEBAR
+    # ========================================================
+
     with st.sidebar:
 
-        st.markdown("""
-        <div class="sidebar-title">
-            ⚙️ Parámetros
-        </div>
+        st.title("⚙️ Parámetros")
 
-        <div class="sidebar-subtitle">
-            Ajusta la configuración utilizada
-            por el detector de objetos.
-        </div>
-        """, unsafe_allow_html=True)
+        st.caption(
+            "Ajusta la configuración utilizada "
+            "por el detector de objetos."
+        )
 
         st.subheader("Configuración de detección")
 
@@ -551,25 +404,21 @@ if model:
             10
         )
 
-
     # ========================================================
     # CÁMARA
     # ========================================================
 
-    st.markdown("## 📷 Captura una imagen")
+    st.subheader("📷 Capturar imagen")
 
-    st.markdown("""
-    <div class="card-description">
-        Utiliza la cámara para tomar una fotografía que será
-        analizada por el modelo de detección.
-    </div>
-    """, unsafe_allow_html=True)
+    st.caption(
+        "Utiliza la cámara para tomar una fotografía "
+        "que será analizada por el modelo."
+    )
 
     picture = st.camera_input(
         "Capturar imagen",
         key="camera"
     )
-
 
     # ========================================================
     # PROCESAMIENTO
@@ -611,7 +460,6 @@ if model:
 
                 st.stop()
 
-
         result = results[0]
 
         boxes = result.boxes
@@ -620,21 +468,18 @@ if model:
 
         annotated_rgb = annotated[:, :, ::-1]
 
-
         # ====================================================
         # RESULTADOS
         # ====================================================
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("---")
 
-        st.markdown("## 📊 Resultados de la detección")
-
+        st.subheader("📊 Resultados de la detección")
 
         col1, col2 = st.columns(
             [1.15, 0.85],
             gap="large"
         )
-
 
         # ====================================================
         # IMAGEN
@@ -642,48 +487,30 @@ if model:
 
         with col1:
 
-            st.markdown("""
-            <div class="card">
+            st.markdown("### 🖼️ Imagen con detecciones")
 
-                <div class="card-title">
-                    🖼️ Imagen con detecciones
-                </div>
-
-                <div class="card-description">
-                    El modelo ha marcado los objetos encontrados
-                    directamente sobre la imagen.
-                </div>
-
-            </div>
-            """, unsafe_allow_html=True)
+            st.caption(
+                "Los objetos encontrados están marcados "
+                "directamente sobre la imagen."
+            )
 
             st.image(
                 annotated_rgb,
                 use_container_width=True
             )
 
-
         # ====================================================
-        # OBJETOS DETECTADOS
+        # OBJETOS
         # ====================================================
 
         with col2:
 
-            st.markdown("""
-            <div class="card">
+            st.markdown("### 🎯 Objetos detectados")
 
-                <div class="card-title">
-                    🎯 Objetos detectados
-                </div>
-
-                <div class="card-description">
-                    Resumen de las categorías encontradas
-                    en la imagen.
-                </div>
-
-            </div>
-            """, unsafe_allow_html=True)
-
+            st.caption(
+                "Resumen de las categorías encontradas "
+                "en la imagen."
+            )
 
             if boxes is not None and len(boxes) > 0:
 
@@ -692,7 +519,6 @@ if model:
                 category_count = {}
 
                 category_conf = {}
-
 
                 for box in boxes:
 
@@ -713,7 +539,6 @@ if model:
                         []
                     ).append(conf)
 
-
                 data = [
 
                     {
@@ -732,9 +557,7 @@ if model:
 
                 ]
 
-
                 df = pd.DataFrame(data)
-
 
                 st.dataframe(
                     df,
@@ -742,26 +565,13 @@ if model:
                     hide_index=True
                 )
 
-
-                st.markdown(
-                    "<br>",
-                    unsafe_allow_html=True
-                )
-
-
-                st.markdown("""
-                <div class="card-title">
-                    📈 Cantidad por categoría
-                </div>
-                """, unsafe_allow_html=True)
-
+                st.markdown("### 📈 Cantidad por categoría")
 
                 st.bar_chart(
                     df.set_index(
                         "Categoría"
                     )["Cantidad"]
                 )
-
 
             else:
 
@@ -774,11 +584,6 @@ if model:
                     "Prueba a reducir el umbral de "
                     "confianza en la barra lateral."
                 )
-
-
-# ============================================================
-# ERROR DE MODELO
-# ============================================================
 
 else:
 
@@ -796,24 +601,14 @@ else:
 
 st.markdown("---")
 
-st.markdown("""
-<div class="status-card">
+st.caption(
+    "🤖 Acerca de la aplicación: "
+    "Detección de objetos con YOLOv5 + Streamlit + PyTorch."
+)
 
-    <div class="status-title">
-        🤖 Acerca de la aplicación
-    </div>
-
-    <div class="status-text">
-        Detección de objetos mediante YOLOv5 +
-        Streamlit + PyTorch.
-    </div>
-
-</div>
-""", unsafe_allow_html=True)
-
-
-st.markdown("""
-<div class="footer-custom">
-    Hecho con 💜 usando YOLOv5, PyTorch y Streamlit
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="footer-text">'
+    'Hecho con 💜 usando YOLOv5, PyTorch y Streamlit'
+    '</div>',
+    unsafe_allow_html=True
+)
